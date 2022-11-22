@@ -18,52 +18,57 @@
 
 clear;
 
-% %% Plots showing families of signaling equilibria 
-% % Low recklessness 
-% [data, eqs, ~, ~, ~] = EqWithFalsePositives('silent', true);
-% DispEqRanges(data, eqs); % Set parameter 'serialize' to true to save fig to disk
-% % Mid recklessness
-% [data, eqs, ~, ~, ~] = EqWithFalsePositives('silent', true, ...
-%     'crashProbFn', @(x) 0.1 .* x, 'trueSignalProbFn', @(x) 0.95 .* x, ...
-%     'falseSignalProbFn', @(x) 0.3 .* x);
-% DispEqRanges(data, eqs, "lgd", true);
-% % High recklessness
-% [data, eqs, ~, ~, ~] = EqWithFalsePositives('silent', true, ...
-%     'crashProbFn', @(x) 0.03 .* x, 'trueSignalProbFn', @(x) 0.95 .* x, ...
-%     'falseSignalProbFn', @(x) 0.5 .* x);
-% DispEqRanges(data, eqs); 
-% 
-% %% Plots showing accident probability paradox
-% [data, eqTypes] = GetEqTypes('V2VMass', 0.9, 'crashCost', 3, ...
-%     'trueSignalProbFn', @(y) 0.8.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
-%     'crashProbFn', @(x) 0.3 .* x + 0.1, 'granularity', int16(1000));
-% DispCrashProb(data, eqTypes); % Set parameter 'serialize' to true to save fig to disk
+%% Plots showing families of signaling equilibria 
+% Low recklessness 
+[data, eqs, ~, ~, ~] = EqWithFalsePositives('silent', true);
+DispEqRanges(data, eqs); % Set parameter 'serialize' to true to save fig to disk
+% Mid recklessness
+[data, eqs, ~, ~, ~] = EqWithFalsePositives('silent', true, ...
+    'crashProbFn', @(x) 0.1 .* x, 'trueSignalProbFn', @(x) 0.95 .* x, ...
+    'falseSignalProbFn', @(x) 0.3 .* x);
+DispEqRanges(data, eqs, "lgd", true);
+% High recklessness
+[data, eqs, ~, ~, ~] = EqWithFalsePositives('silent', true, ...
+    'crashProbFn', @(x) 0.03 .* x, 'trueSignalProbFn', @(x) 0.95 .* x, ...
+    'falseSignalProbFn', @(x) 0.5 .* x);
+DispEqRanges(data, eqs); 
+
+%% Plots showing accident probability paradox
+[data, eqTypes] = GetEqTypes('V2VMass', 0.9, 'crashCost', 3, ...
+    'trueSignalProbFn', @(y) 0.8.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
+    'crashProbFn', @(x) 0.3 .* x + 0.1, 'granularity', int16(1000));
+DispCrashProb(data, eqTypes); % Set parameter 'serialize' to true to save fig to disk
 
 %% Plots showing paradox perversity 
 [data, perversities] = SignalingPerversity('V2VMass', 0.9, ...
-    'trueSignalProbFn', @(y) 0.8.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
+    'trueSignalProbFn', @(y) 0.9.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
     'crashProbFn', @(x) 0.3 .* x + 0.1, 'granularity', int16(1000));
 DispPerversities(data, perversities, false); % Set last argument to true to save fig to disk
 
-% %% Plots showing social cost paradoxes
-% [data, eqTypes] = GetEqTypes('V2VMass', 0.066, 'crashCost', 1.001, ...
-%     'trueSignalProbFn', @(y) 0.9.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
-%     'crashProbFn', @(x) x.^(1/4), 'granularity', int16(1000));
-% crashProbs = DispCrashProb(data, eqTypes, 'display', false);
-% DispSocialCost(data, eqTypes, crashProbs); % Set parameter 'serialize' to true to save fig to disk
-% 
-% [data, eqTypes] = GetEqTypes('V2VMass', 0.4, 'crashCost', 20, ...
-%     'trueSignalProbFn', @(y) 0.95.*y, 'falseSignalProbFn', @(y) 0.5.*y, ...
-%     'crashProbFn', @(x) 0.03.*x, 'granularity', int16(1000));
-% crashProbs = DispCrashProb(data, eqTypes, 'display', false);
-% DispSocialCost(data, eqTypes, crashProbs);
-% 
-% [data, eqTypes] = GetEqTypes('V2VMass', 0.8, 'crashCost', 5, ...
-%     'trueSignalProbFn', @(y) 0.8.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
-%     'crashProbFn', @(x) 0.8 .* x + 0.1, 'granularity', int16(1000));
-% crashProbs = DispCrashProb(data, eqTypes, 'display', false);
-% socialCosts = DispSocialCost(data, eqTypes, crashProbs, 'display', false); 
-% DispCrashProbSocialCost(data, crashProbs, socialCosts, false); % Set last argument to true to save fig to disk
+[data, perversities] = SignalingPerversity('V2VMass', 0.9, ...
+    'trueSignalProbFn', @(y) 0.9.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
+    'crashProbFn', @(x) 0.1 .* x + 0.01, 'granularity', int16(1000));
+DispPerversities(data, perversities, false);
+
+%% Plots showing social cost paradoxes
+[data, eqTypes] = GetEqTypes('V2VMass', 0.066, 'crashCost', 1.001, ...
+    'trueSignalProbFn', @(y) 0.9.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
+    'crashProbFn', @(x) x.^(1/4), 'granularity', int16(1000));
+crashProbs = DispCrashProb(data, eqTypes, 'display', false);
+DispSocialCost(data, eqTypes, crashProbs); % Set parameter 'serialize' to true to save fig to disk
+
+[data, eqTypes] = GetEqTypes('V2VMass', 0.4, 'crashCost', 20, ...
+    'trueSignalProbFn', @(y) 0.95.*y, 'falseSignalProbFn', @(y) 0.5.*y, ...
+    'crashProbFn', @(x) 0.03.*x, 'granularity', int16(1000));
+crashProbs = DispCrashProb(data, eqTypes, 'display', false);
+DispSocialCost(data, eqTypes, crashProbs);
+
+[data, eqTypes] = GetEqTypes('V2VMass', 0.8, 'crashCost', 5, ...
+    'trueSignalProbFn', @(y) 0.8.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
+    'crashProbFn', @(x) 0.8 .* x + 0.1, 'granularity', int16(1000));
+crashProbs = DispCrashProb(data, eqTypes, 'display', false);
+socialCosts = DispSocialCost(data, eqTypes, crashProbs, 'display', false); 
+DispCrashProbSocialCost(data, crashProbs, socialCosts, false); % Set last argument to true to save fig to disk
 
 %% Helper functions
 function DispEqRanges(varargin)
@@ -344,7 +349,7 @@ function [data, perversities] = SignalingPerversity(varargin)
     falseSignalProbFn = p.Results.falseSignalProbFn;
 
     beta = [0, 1];
-    crashCosts = linspace(1, 50, granularity);
+    crashCosts = linspace(1, 100, granularity);
     [betaMat, crashCostMat] = meshgrid(beta, crashCosts);
 
     % Calculate critical points where equilibrium type changes
@@ -430,13 +435,15 @@ function [data, perversities] = SignalingPerversity(varargin)
 end
 
 function DispPerversities(data, perversities, serialize)
+    figure()    
     plot(data.crashCosts, perversities, 'LineWidth', 2);
     title("Signaling Perversity Sensitivity");
     xlabel("Crash cost $r$");
-    ylabel("Signaling Perversity");
+    ylabel("Signaling Perversity $\delta$");
     FormatPlot(gca);
 
     if (serialize)
-        saveas(gcf, 'SignalingPerversity', 'epsc');
+        saveName = "SignalingPerversity_" + datestr(now,'dd-mm-yy_HH:MM:SS');
+        saveas(gcf, saveName, 'epsc');
     end
 end
