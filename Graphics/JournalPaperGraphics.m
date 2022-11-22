@@ -40,9 +40,10 @@ clear;
 % DispCrashProb(data, eqTypes); % Set parameter 'serialize' to true to save fig to disk
 
 %% Plots showing paradox perversity 
-perversities = SignalingPerversity('V2VMass', 0.9, ...
+[data, perversities] = SignalingPerversity('V2VMass', 0.9, ...
     'trueSignalProbFn', @(y) 0.8.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
     'crashProbFn', @(x) 0.3 .* x + 0.1, 'granularity', int16(1000));
+DispPerversities(data, perversities, false); % Set last argument to true to save fig to disk
 
 % %% Plots showing social cost paradoxes
 % [data, eqTypes] = GetEqTypes('V2VMass', 0.066, 'crashCost', 1.001, ...
@@ -320,7 +321,7 @@ function DispCrashProbSocialCost(data, crashProbs, socialCosts, serialize)
     end
 end
 
-function perversities = SignalingPerversity(varargin)
+function [data, perversities] = SignalingPerversity(varargin)
     % Parse inputs
     defaultV2VMass = 0.5;
     defaultGranularity = 100;
@@ -343,7 +344,7 @@ function perversities = SignalingPerversity(varargin)
     falseSignalProbFn = p.Results.falseSignalProbFn;
 
     beta = [0, 1];
-    crashCosts = linspace(1, 100, granularity);
+    crashCosts = linspace(1, 50, granularity);
     [betaMat, crashCostMat] = meshgrid(beta, crashCosts);
 
     % Calculate critical points where equilibrium type changes
@@ -411,5 +412,31 @@ function perversities = SignalingPerversity(varargin)
     crashProbs(eqTypes.SINRUR) = Pvs(eqTypes.SINRUR);       % SINRUR
     crashProbs(eqTypes.SRNRUR) = crashProbFn(1);            % SRNRUR
 
+    % Calculate perversity index as difference between beta=1 and beta=0
     perversities = diff(crashProbs, 1, 2);
+
+    % Save data used to generate equilibrium types
+    data.V2VMass = V2VMass;
+    data.crashCosts = crashCosts;
+    data.granularity = granularity;
+    data.crashProbFn = crashProbFn;
+    data.trueSignalProbFn = trueSignalProbFn;
+    data.falseSignalProbFn = falseSignalProbFn;
+    data.beta = beta;
+
+    data.Pvs = Pvs;
+    data.Pn = Pn;
+    data.Pvu = Pvu;
+end
+
+function DispPerversities(data, perversities, serialize)
+    plot(data.crashCosts, perversities, 'LineWidth', 2);
+    title("Signaling Perversity Sensitivity");
+    xlabel("Crash cost $r$");
+    ylabel("Signaling Perversity");
+    FormatPlot(gca);
+
+    if (serialize)
+        saveas(gcf, 'SignalingPerversity', 'epsc');
+    end
 end
