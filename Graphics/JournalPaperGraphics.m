@@ -418,7 +418,7 @@ function [data, perversities] = SignalingPerversity(varargin)
     crashProbs(eqTypes.SRNRUR) = crashProbFn(1);            % SRNRUR
 
     % Calculate perversity index as difference between beta=1 and beta=0
-    perversities = diff(crashProbs, 1, 2);
+    perversities = crashProbs(:, 2) ./ crashProbs(:, 1);
 
     % Save data used to generate equilibrium types
     data.V2VMass = V2VMass;
