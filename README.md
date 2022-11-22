@@ -9,3 +9,6 @@ Due to computational and visual limitations, all calculations done in this scrip
 By default, the figures will only be displayed, but simple changes to the script can cause them to be saved to your machine. 
 
 All scripts assume that the root repository folder and the subfolder `Graphics` are on the current Matlab path. 
+
+This material is based upon work supported by the National Science Foundation under Grant Number ECCS-2013779. 
+Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
