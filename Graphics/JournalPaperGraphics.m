@@ -18,46 +18,51 @@
 
 clear;
 
-%% Plots showing families of signaling equilibria 
-% Low recklessness 
-[data, eqs, ~, ~, ~] = EqWithFalsePositives('silent', true);
-DispEqRanges(data, eqs); % Set parameter 'serialize' to true to save fig to disk
-% Mid recklessness
-[data, eqs, ~, ~, ~] = EqWithFalsePositives('silent', true, ...
-    'crashProbFn', @(x) 0.1 .* x, 'trueSignalProbFn', @(x) 0.95 .* x, ...
-    'falseSignalProbFn', @(x) 0.3 .* x);
-DispEqRanges(data, eqs, "lgd", true);
-% High recklessness
-[data, eqs, ~, ~, ~] = EqWithFalsePositives('silent', true, ...
-    'crashProbFn', @(x) 0.03 .* x, 'trueSignalProbFn', @(x) 0.95 .* x, ...
-    'falseSignalProbFn', @(x) 0.5 .* x);
-DispEqRanges(data, eqs); 
+% %% Plots showing families of signaling equilibria 
+% % Low recklessness 
+% [data, eqs, ~, ~, ~] = EqWithFalsePositives('silent', true);
+% DispEqRanges(data, eqs); % Set parameter 'serialize' to true to save fig to disk
+% % Mid recklessness
+% [data, eqs, ~, ~, ~] = EqWithFalsePositives('silent', true, ...
+%     'crashProbFn', @(x) 0.1 .* x, 'trueSignalProbFn', @(x) 0.95 .* x, ...
+%     'falseSignalProbFn', @(x) 0.3 .* x);
+% DispEqRanges(data, eqs, "lgd", true);
+% % High recklessness
+% [data, eqs, ~, ~, ~] = EqWithFalsePositives('silent', true, ...
+%     'crashProbFn', @(x) 0.03 .* x, 'trueSignalProbFn', @(x) 0.95 .* x, ...
+%     'falseSignalProbFn', @(x) 0.5 .* x);
+% DispEqRanges(data, eqs); 
+% 
+% %% Plots showing accident probability paradox
+% [data, eqTypes] = GetEqTypes('V2VMass', 0.9, 'crashCost', 3, ...
+%     'trueSignalProbFn', @(y) 0.8.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
+%     'crashProbFn', @(x) 0.3 .* x + 0.1, 'granularity', int16(1000));
+% DispCrashProb(data, eqTypes); % Set parameter 'serialize' to true to save fig to disk
 
-%% Plots showing accident probability paradox
-[data, eqTypes] = GetEqTypes('V2VMass', 0.9, 'crashCost', 3, ...
+%% Plots showing paradox perversity 
+perversities = SignalingPerversity('V2VMass', 0.9, ...
     'trueSignalProbFn', @(y) 0.8.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
     'crashProbFn', @(x) 0.3 .* x + 0.1, 'granularity', int16(1000));
-DispCrashProb(data, eqTypes); % Set parameter 'serialize' to true to save fig to disk
 
-%% Plots showing social cost paradoxes
-[data, eqTypes] = GetEqTypes('V2VMass', 0.066, 'crashCost', 1.001, ...
-    'trueSignalProbFn', @(y) 0.9.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
-    'crashProbFn', @(x) x.^(1/4), 'granularity', int16(1000));
-crashProbs = DispCrashProb(data, eqTypes, 'display', false);
-DispSocialCost(data, eqTypes, crashProbs); % Set parameter 'serialize' to true to save fig to disk
-
-[data, eqTypes] = GetEqTypes('V2VMass', 0.4, 'crashCost', 20, ...
-    'trueSignalProbFn', @(y) 0.95.*y, 'falseSignalProbFn', @(y) 0.5.*y, ...
-    'crashProbFn', @(x) 0.03.*x, 'granularity', int16(1000));
-crashProbs = DispCrashProb(data, eqTypes, 'display', false);
-DispSocialCost(data, eqTypes, crashProbs);
-
-[data, eqTypes] = GetEqTypes('V2VMass', 0.8, 'crashCost', 5, ...
-    'trueSignalProbFn', @(y) 0.8.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
-    'crashProbFn', @(x) 0.8 .* x + 0.1, 'granularity', int16(1000));
-crashProbs = DispCrashProb(data, eqTypes, 'display', false);
-socialCosts = DispSocialCost(data, eqTypes, crashProbs, 'display', false); 
-DispCrashProbSocialCost(data, crashProbs, socialCosts, false); % Set last argument to true to save fig to disk
+% %% Plots showing social cost paradoxes
+% [data, eqTypes] = GetEqTypes('V2VMass', 0.066, 'crashCost', 1.001, ...
+%     'trueSignalProbFn', @(y) 0.9.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
+%     'crashProbFn', @(x) x.^(1/4), 'granularity', int16(1000));
+% crashProbs = DispCrashProb(data, eqTypes, 'display', false);
+% DispSocialCost(data, eqTypes, crashProbs); % Set parameter 'serialize' to true to save fig to disk
+% 
+% [data, eqTypes] = GetEqTypes('V2VMass', 0.4, 'crashCost', 20, ...
+%     'trueSignalProbFn', @(y) 0.95.*y, 'falseSignalProbFn', @(y) 0.5.*y, ...
+%     'crashProbFn', @(x) 0.03.*x, 'granularity', int16(1000));
+% crashProbs = DispCrashProb(data, eqTypes, 'display', false);
+% DispSocialCost(data, eqTypes, crashProbs);
+% 
+% [data, eqTypes] = GetEqTypes('V2VMass', 0.8, 'crashCost', 5, ...
+%     'trueSignalProbFn', @(y) 0.8.*y, 'falseSignalProbFn', @(y) 0.1.*y, ...
+%     'crashProbFn', @(x) 0.8 .* x + 0.1, 'granularity', int16(1000));
+% crashProbs = DispCrashProb(data, eqTypes, 'display', false);
+% socialCosts = DispSocialCost(data, eqTypes, crashProbs, 'display', false); 
+% DispCrashProbSocialCost(data, crashProbs, socialCosts, false); % Set last argument to true to save fig to disk
 
 %% Helper functions
 function DispEqRanges(varargin)
@@ -313,4 +318,98 @@ function DispCrashProbSocialCost(data, crashProbs, socialCosts, serialize)
     if (serialize)
         saveas(gcf, 'SocialCostConflict', 'epsc');
     end
+end
+
+function perversities = SignalingPerversity(varargin)
+    % Parse inputs
+    defaultV2VMass = 0.5;
+    defaultGranularity = 100;
+    defaultCrashProbFn = @(x) 0.8 .* x + 0.1;
+    defaultTrueSignalProbFn = @(x) 0.7 .* x;
+    defaultFalseSignalProbFn = @(x) 0.1 .* x;
+    
+    p = inputParser;
+    addParameter(p, 'V2VMass', defaultV2VMass, @(x) 0 <= x && x <= 1);
+    addParameter(p, 'granularity', defaultGranularity, @(x) isinteger(x) && (x > 0));
+    addParameter(p, 'crashProbFn', defaultCrashProbFn);
+    addParameter(p, 'trueSignalProbFn', defaultTrueSignalProbFn);
+    addParameter(p, 'falseSignalProbFn', defaultFalseSignalProbFn);
+    parse(p, varargin{:});
+
+    V2VMass = p.Results.V2VMass;
+    granularity = p.Results.granularity;
+    crashProbFn = p.Results.crashProbFn;
+    trueSignalProbFn = p.Results.trueSignalProbFn;
+    falseSignalProbFn = p.Results.falseSignalProbFn;
+
+    beta = [0, 1];
+    crashCosts = linspace(1, 100, granularity);
+    [betaMat, crashCostMat] = meshgrid(beta, crashCosts);
+
+    % Calculate critical points where equilibrium type changes
+    Pvs = falseSignalProbFn(V2VMass) ./ (crashCostMat .* trueSignalProbFn(V2VMass) + falseSignalProbFn(V2VMass));
+    Pn = 1 ./ (1 + crashCostMat);
+    Pvu = (1 - betaMat .* falseSignalProbFn(V2VMass)) ./ ...
+        (1 + crashCostMat .* (1 - betaMat * trueSignalProbFn(V2VMass)) - betaMat * falseSignalProbFn(V2VMass));
+    Qvs = betaMat .* Pvs * (trueSignalProbFn(V2VMass) - falseSignalProbFn(V2VMass)) ...
+        + betaMat .* falseSignalProbFn(V2VMass);
+    Qn = betaMat .* Pn * (trueSignalProbFn(V2VMass) - falseSignalProbFn(V2VMass)) ...
+        + betaMat .* falseSignalProbFn(V2VMass);
+    Qvu = betaMat .* Pvu * (trueSignalProbFn(V2VMass) - falseSignalProbFn(V2VMass)) ...
+        + betaMat .* falseSignalProbFn(V2VMass);
+
+    border1 = crashProbFn(0);
+    border2 = crashProbFn(V2VMass - Qvu * V2VMass);
+    border3 = crashProbFn(V2VMass - Qn * V2VMass);
+    border4 = crashProbFn(1 - Qn * V2VMass);
+    border5 = crashProbFn(1 - Qvs * V2VMass);
+    border6 = crashProbFn(1);
+
+    % Calculate equilibrium type valid for each value of beta
+    eqTypes.SCNCUC = Pvu < border1;
+    eqTypes.SCNCUI = border1 <= Pvu & Pvu <= border2;
+    eqTypes.SCNCUR = border2 < Pvu & Pn < border3;
+    eqTypes.SCNIUR = border3 <= Pn & Pn <= border4;
+    eqTypes.SCNRUR = border4 < Pn & Pvs < border5;
+    eqTypes.SINRUR = border5 <= Pvs & Pvs <= border6;
+    eqTypes.SRNRUR = border6 < Pvs;
+
+    eqTypes.all = zeros(size(crashCostMat));
+    eqTypes.all(eqTypes.SCNCUC) = 1;
+    eqTypes.all(eqTypes.SCNCUI) = 2;
+    eqTypes.all(eqTypes.SCNCUR) = 3;
+    eqTypes.all(eqTypes.SCNIUR) = 4;
+    eqTypes.all(eqTypes.SCNRUR) = 5;
+    eqTypes.all(eqTypes.SINRUR) = 6;
+    eqTypes.all(eqTypes.SRNRUR) = 7;
+
+    % Calculate crash prob at each value of beta
+    crashProbs = zeros(size(crashCostMat));
+    firstColMask = crashProbs;
+    firstColMask(1, :) = 1;
+    syms P;
+
+    crashProbs(eqTypes.SCNCUC) = crashProbFn(0);            % SCNCUC
+    crashProbs(eqTypes.SCNCUI) = Pvu(eqTypes.SCNCUI);       % SCNCUI
+    P0 = double(vpasolve(P == crashProbFn((1 - ...        % SCNCUR
+                0*P*(trueSignalProbFn(V2VMass) - falseSignalProbFn(V2VMass)) - ...
+                0*falseSignalProbFn(V2VMass)) * V2VMass)));
+    P1 = double(vpasolve(P == crashProbFn((1 - ...
+                1*P*(trueSignalProbFn(V2VMass) - falseSignalProbFn(V2VMass)) - ...
+                1*falseSignalProbFn(V2VMass)) * V2VMass)));
+    crashProbs(eqTypes.SCNCUR & firstColMask) = P0;
+    crashProbs(eqTypes.SCNCUR & ~firstColMask) = P1;
+    crashProbs(eqTypes.SCNIUR) = Pn(eqTypes.SCNIUR);        % SCNIUR
+    P0 = double(vpasolve(P == crashProbFn(1 - ...           % SCNRUR
+                (0*P*(trueSignalProbFn(V2VMass) - falseSignalProbFn(V2VMass)) - ...
+                0*falseSignalProbFn(V2VMass)) * V2VMass)));
+    P1 = double(vpasolve(P == crashProbFn(1 - ...
+                (1*P*(trueSignalProbFn(V2VMass) - falseSignalProbFn(V2VMass)) - ...
+                1*falseSignalProbFn(V2VMass)) * V2VMass)));
+    crashProbs(eqTypes.SCNRUR & firstColMask) = P0;
+    crashProbs(eqTypes.SCNRUR & ~firstColMask) = P1;
+    crashProbs(eqTypes.SINRUR) = Pvs(eqTypes.SINRUR);       % SINRUR
+    crashProbs(eqTypes.SRNRUR) = crashProbFn(1);            % SRNRUR
+
+    perversities = diff(crashProbs, 1, 2);
 end
