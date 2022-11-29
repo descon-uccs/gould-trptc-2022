@@ -8,7 +8,9 @@ Due to computational and visual limitations, all calculations done in this scrip
 `JournalPaperGraphics.m` generates all the plots seen in the paper. 
 By default, the figures will only be displayed, but simple changes to the script can cause them to be saved to your machine. 
 
-All scripts assume that the root repository folder and the subfolder `Graphics` are on the current Matlab path. 
+All scripts assume that the root repository folder and the subfolder `Graphics` are on the current Matlab path.
+
+To cite this code, please cite the preprint located at https://arxiv.org/abs/2207.06411.
 
 This material is based upon work supported by the National Science Foundation under Grant Number ECCS-2013779. 
 Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
